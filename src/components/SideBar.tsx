@@ -8,10 +8,10 @@ const SideBar =()=>{
     const sidebarStyles ={
         width:"220px",
         height:"100vh",
-        position:"absolute",
+        position:"fixed",
         left:"0",
-        padding:"10px",
-        boxShadow:"5px 5px 7px #1c1d1f, -5px -5px 7px #222527"
+        top:"0",
+        color: "rgb(20,99,255)"
     }
     return (
         <aside className={"sidebar"} style={sidebarStyles}>

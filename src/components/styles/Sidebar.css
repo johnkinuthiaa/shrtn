@@ -5,7 +5,7 @@
     justify-content: space-between;
     gap: 15px;
     margin-left: 20px;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 .aside__container>*{
     display: flex;
@@ -16,8 +16,12 @@
     cursor: pointer;
 
 }
+
 .log_out{
     position: absolute;
     bottom: 0;
     margin-bottom: 20px;
+}
+.sidebar{
+    border-right: 2px solid rgb(154, 166, 178,0.4);
 }
