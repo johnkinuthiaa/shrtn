@@ -3,9 +3,10 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import LinkIcon from '@mui/icons-material/Link';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {Link} from "react-router";
 const SideBar =()=>{
     const sidebarStyles ={
-        width:"300px",
+        width:"220px",
         height:"100vh",
         position:"absolute",
         left:"0",
@@ -20,15 +21,15 @@ const SideBar =()=>{
             <div className={"aside__container"}>
                 <div className={"dashboard"}>
                     <AnalyticsIcon/>
-                    <h3>Dashboard</h3>
+                    <h3><Link to={"/dashboard"}>Dashboard</Link></h3>
                 </div>
                 <div className={"links"}>
                     <LinkIcon/>
-                    <h3>Links</h3>
+                    <h3><Link to={"/links"}>Links</Link></h3>
                 </div>
                 <div className={"settings"}>
                     <SettingsIcon/>
-                    <h3>Settings</h3>
+                    <h3><Link to={"/settings"}>Settings</Link></h3>
                 </div>
                 <div className={"log_out"}>
                     <div>

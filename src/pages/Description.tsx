@@ -1,6 +1,7 @@
+import "./styles/DescriptionContainer.css"
 const Description =()=>{
     return(
-        <div>
+        <div className={"description"}>
             desc
         </div>
     )
