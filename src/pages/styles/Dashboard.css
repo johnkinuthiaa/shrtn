@@ -155,3 +155,11 @@ iframe{
 .view__iframe{
     background-color: white;
 }
+.show_formed__link{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(0,0,0,0.3);
+}
