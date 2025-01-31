@@ -1,9 +1,13 @@
 import SettingsIcon from "@mui/icons-material/Settings";
 
-const Header =()=>{
+interface HeaderProps{
+    title:string
+}
+const Header =({title}:HeaderProps)=>{
     return(
         <header>
-            <h1>Url shortener</h1>
+
+            <h1>{title?title:"Url shortener"}</h1>
             <div className={"header__left"}>
                 <SettingsIcon/>
                 <div className={"profile"}>

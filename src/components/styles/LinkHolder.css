@@ -15,8 +15,12 @@
     gap: 5px;
     margin-right: 10px;
 }
+.link__holder__originalUrl{
+    line-break: anywhere;
+    margin-right: 10px;
+}
 .link__holder_left>*{
-    line-height: 2;
+    line-height: 3;
 }
 
 .link__holder_right{

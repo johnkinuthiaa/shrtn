@@ -16,12 +16,19 @@
     cursor: pointer;
 
 }
-
+.link__icon__logo{
+    color: rgb(255, 101, 0);
+    height: 50px;
+}
 .log_out{
     position: absolute;
     bottom: 0;
     margin-bottom: 20px;
 }
 .sidebar{
-    border-right: 2px solid rgb(154, 166, 178,0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.logo__name{
+    display: flex;
+    align-items: flex-start;
 }

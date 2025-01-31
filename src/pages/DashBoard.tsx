@@ -5,8 +5,10 @@ import LinkHolder from "../components/LinkHolder.tsx";
 import Header from "../components/Header.tsx";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import useSWR from "swr";
+import QrGen from "../components/QrGen.tsx";
+import {styled} from "@mui/material";
 
 const DashBoard =()=>{
     const CREATE_URL =import.meta.env.VITE_CREATE_SHORTURL
@@ -16,9 +18,13 @@ const DashBoard =()=>{
     const [iframeImage,setIframeImage] =useState("https://i.pinimg.com/236x/f8/bf/67/f8bf670258af7e018ebba54a5b446aa4.jpg")
     const[shortURL,setShortUrl] =useState<string>("")
     const[allUrls,setAll] =useState<string[]>([])
-
+    const[size,setSize] =useState(0)
     const myHeaders =new Headers();
     myHeaders.append("Content-Type","application/json")
+
+    useEffect(() => {
+
+    }, [size]);
 
     const createShortUrl =(async ()=>{
         const response =await fetch(CREATE_URL,{
@@ -41,14 +47,18 @@ const DashBoard =()=>{
         if(response.ok){
             const data =await response.json()
             setAll(data.urlModels)
+            setSize(allUrls.length)
         }
     })
     const {isLoading,error} =useSWR(GET_ALL,fetchAllUrls)
 
+    // url regex
+    const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+    const regex = new RegExp(expression);
 
     return(
         <div className={"dashboard__container"}>
-            <Header/>
+            <Header title={""}/>
             <div className={"body__container"}>
                 <div className={"analytics__container"}>
                     <h2>PERFORMANCE</h2>
@@ -74,7 +84,7 @@ const DashBoard =()=>{
                     <div className={"all_links"}>
                         <h2>ENGAGEMENT ALL TIME</h2>
                         {allUrls.map((urls)=>(
-                            <LinkHolder shortLink={urls.shortUrl} originalUrl={urls.originalUrl} id={urls.id} date={urls.createdOn}/>
+                            <LinkHolder shortLink={urls.shortUrl} originalUrl={urls.originalUrl} id={urls.id} date={urls.createdOn} size={size}/>
                         ))}
 
                     </div>
@@ -92,7 +102,7 @@ const DashBoard =()=>{
                         <button className={"create__link__button"} type={"submit"}>Create Link <ArrowRightAltIcon/></button>
                     </form>
                     <div className={"view__iframe"}>
-                        <iframe src={longUrl?longUrl:iframeImage} width="100%" height="280px" ></iframe>
+                        <iframe src={longUrl?longUrl.match(regex)?longUrl:iframeImage:iframeImage} width="100%" height="280px" ></iframe>
 
                         <p>shrtnd Url:</p>
                         <div className={"show_formed__link"}>
@@ -105,7 +115,7 @@ const DashBoard =()=>{
                             <button className={"download__qr__button"}>Download PNG</button>
                         </div>
                         <div className={"actual_qr_image"}>
-                            <img src={"https://i.pinimg.com/736x/01/48/1d/01481d0e8aaaf684a6f61efb75923dcd.jpg"} className={"qr_code__image"} alt={"qr code"}/>
+                            {longUrl.match(regex)?<QrGen url={longUrl}/>:<img src={iframeImage} alt={"placeholder"} style={{height:"190px"}}/>}
                             <div className={"qr__links"}>
                                 <div>
                                     <h4> <span><LinkIcon/></span>link</h4>
