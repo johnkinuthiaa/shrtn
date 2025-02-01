@@ -27,6 +27,9 @@
 }
 .sidebar{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    border-right: 2px solid gray;
+    position: absolute;
+    z-index: 999;
 }
 .logo__name{
     display: flex;
