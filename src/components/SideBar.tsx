@@ -24,25 +24,25 @@ const SideBar =()=>{
             <div className={"aside__container"}>
                 <div className={"dashboard"}>
                     <AnalyticsIcon/>
-                    <h3><Link to={"/dashboard"} onClick={()=>setActive(true)}>Dashboard</Link></h3>
+                    <h2><Link to={"/dashboard"} onClick={()=>setActive(true)}>Dashboard</Link></h2>
                 </div>
                 <div className={"links"}>
                     <LinkIcon/>
-                    <h3><Link to={"/links"}>Links</Link></h3>
+                    <h2><Link to={"/links"}>Links</Link></h2>
                 </div>
                 <div className={"links"}>
                     <QrCode2Icon/>
-                    <h3><Link to={"/qr-code"}>Qr code</Link></h3>
+                    <h2><Link to={"/qr-code"}>Qr code</Link></h2>
                 </div>
                 <div className={"settings"}>
                     <SettingsIcon/>
-                    <h3><Link to={"/settings"}>Settings</Link></h3>
+                    <h2><Link to={"/settings"}>Settings</Link></h2>
                 </div>
                 <div className={"log_out"}>
                     <div>
                         <LogoutIcon/>
                     </div>
-                    <h3>Log Out</h3>
+                    <h2>Log Out</h2>
                 </div>
             </div>
 

@@ -144,6 +144,12 @@ iframe{
     align-items: center;
     justify-content: center;
     gap: 5px;
+    margin-left: 10px;
+}
+.qr__links>div>h4{
+    display: flex;
+    align-items: center;
+    gap: 3px;
 }
 .download__qr__button{
     padding: 4px;
@@ -163,4 +169,13 @@ iframe{
     display: flex;
     align-items: center;
     border: 1px solid rgb(0,0,0,0.3);
+}
+.copy__to__clipboard{
+    cursor: pointer;
+    border: none;
+    background-color:rgb(160, 222, 255) ;
+    color: white;
+    border-radius: 6px;
+    align-items: center;
+    display: flex;
 }
