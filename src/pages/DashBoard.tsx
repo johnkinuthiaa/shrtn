@@ -8,52 +8,56 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {useEffect, useState} from "react";
 import useSWR from "swr";
 import QrGen from "../components/QrGen.tsx";
-import {styled} from "@mui/material";
 
+interface LinkHolderProps{
+    shortLink: string,
+    originalUrl :string,
+    date :string,
+    id:number,
+    clicks:number
+}
 const DashBoard =()=>{
+    const USER_ID =1
     const CREATE_URL =import.meta.env.VITE_CREATE_SHORTURL
-    const GET_ALL =import.meta.env.VITE_GET_ALL
+    const GET_ALL =`http://localhost:8080/api/v1/shrtn/${USER_ID}/all-urls`
     const[longUrl,setLongUrl] =useState<string>("")
-    const[site,setSite] =useState<string>("")
     const [iframeImage,setIframeImage] =useState("https://i.pinimg.com/236x/f8/bf/67/f8bf670258af7e018ebba54a5b446aa4.jpg")
     const[shortURL,setShortUrl] =useState<string>("")
     const[allUrls,setAll] =useState<string[]>([])
-    const[size,setSize] =useState(0)
     const myHeaders =new Headers();
     myHeaders.append("Content-Type","application/json")
 
-    useEffect(() => {
-
-    }, [size]);
-
-    const createShortUrl =(async ()=>{
-        const response =await fetch(CREATE_URL,{
+    const createNewShortUrl =(async ()=>{
+        const response =await fetch(CREATE_URL+1,{
             method:"POST",
+            headers:myHeaders,
             body:JSON.stringify({
-                originalUrl: longUrl,
-                userId: "1",
-            }),
-            headers:myHeaders
+                originalUrl:longUrl
+            })
         })
         if(response.ok){
             const data =await response.json()
-            if(data.statusCode ==200){
-                setShortUrl("http://localhost:8082/api/v1/shrtn/redirect/"+data.urlModel.shortUrl)
-            }
+            setShortUrl("http://localhost:8080/api/v1/shrtn/redirect/"+data?.urlModel?.shortUrl)
+        }else{
+            console.log("error creating a short url")
         }
     })
-    const fetchAllUrls =(async ()=>{
-        const response =await fetch(GET_ALL)
+    const getAllUrlsByUser =(async ()=>{
+        const response =await fetch(`http://localhost:8080/api/v1/shrtn/${USER_ID}/all-urls`)
         if(response.ok){
             const data =await response.json()
-            setAll(data.urlModels)
-            setSize(allUrls.length)
+            setAll(data?.urlModels)
+        }else{
+            console.log("error creating a short url")
         }
     })
-    const {isLoading,error} =useSWR(GET_ALL,fetchAllUrls)
+    const {isLoading} =useSWR(`http://localhost:8080/api/v1/shrtn/${USER_ID}/all-urls`,getAllUrlsByUser)
+    if(isLoading){
+        return <div>Loading...</div>
+    }
 
     // url regex
-    const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+    const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/gi;
     const regex = new RegExp(expression);
 
     return(
@@ -83,8 +87,14 @@ const DashBoard =()=>{
                     </div>
                     <div className={"all_links"}>
                         <h2>ENGAGEMENT ALL TIME</h2>
-                        {allUrls.map((urls)=>(
-                            <LinkHolder shortLink={urls.shortUrl} originalUrl={urls.originalUrl} id={urls.id} date={urls.createdOn} size={size}/>
+                        {allUrls.map(({shortUrl,originalUrl,id,createdOn,clicks},key:number)=>(
+                            <LinkHolder
+                                key={key}
+                                shortLink={shortUrl}
+                                originalUrl={originalUrl}
+                                id={id}
+                                date={createdOn}
+                                clicks={clicks?.clicks}/>
                         ))}
 
                     </div>
@@ -94,7 +104,7 @@ const DashBoard =()=>{
                     <p>Create,short and manage your links</p>
                     <form className={"url__input__form"} onSubmit={(e)=>{
                         e.preventDefault()
-                        createShortUrl()
+                        createNewShortUrl()
                     }} >
                         <input type={"url"} className={"link__input"} onChange={(e)=>{
                             setLongUrl(e.target.value)
@@ -104,7 +114,7 @@ const DashBoard =()=>{
                     <div className={"view__iframe"}>
                         <iframe src={longUrl?longUrl.match(regex)?longUrl:iframeImage:iframeImage} width="100%" height="280px" ></iframe>
 
-                        <p>shrtnd Url:</p>
+                        <p>shortened Url:</p>
                         <div className={"show_formed__link"}>
                             <h3><LinkIcon/> {shortURL}</h3>
                         </div>

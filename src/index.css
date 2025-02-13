@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Roboto,Aldrich,"serif";
+    font-family: Roboto,"serif",Geist Mono;
 }
 a{
     color: rgb(0,0,0,0.7);

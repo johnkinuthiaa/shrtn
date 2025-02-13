@@ -1,16 +1,15 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import "./styles/LinkHolder.css"
 import DeleteIcon from '@mui/icons-material/Delete';
-import useSWR from "swr";
-import {useEffect} from "react";
+
 interface LinkHolderProps{
     shortLink: string,
     originalUrl :string,
     date :string,
     id:number,
-    size:number
+    clicks:number
 }
-const LinkHolder =({shortLink,originalUrl,date,id,size}:LinkHolderProps)=>{
+const LinkHolder =({shortLink,originalUrl,date,id,clicks}:LinkHolderProps)=>{
     const DELETE_URL = import.meta.env.VITE_DELETE_URL
 
     const deleteById =(async ()=>{
@@ -24,7 +23,7 @@ const LinkHolder =({shortLink,originalUrl,date,id,size}:LinkHolderProps)=>{
     })
 
     return(
-        <div className={"link__holder"} id={id}>
+        <div className={"link__holder"} >
             <div className={"link__holder__left"}>
                 <h3>{shortLink}</h3>
                 <p className={"link__holder__originalUrl"}>{originalUrl}</p>
@@ -35,7 +34,8 @@ const LinkHolder =({shortLink,originalUrl,date,id,size}:LinkHolderProps)=>{
                     deleteById()
                 }}><DeleteIcon/></button>
             </div>
-            {/*<div>{date}</div>*/}
+            <div>Total clicks :{clicks}</div>
+            <div>{date}</div>
         </div>
     )
 }
