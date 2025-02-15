@@ -1,13 +1,14 @@
 interface ModalProps{
     text:string
-    icon:Element
+    icon: never
 }
 
 const Modal =({text,icon}:ModalProps)=>{
+
     return(
         <div className={"copy__modal__holder"}>
             <div className={"copy__modal"}>
-                <div className={"success__copy__modal"}>
+                <div className={"success__copy__modal"} >
                     {icon}
                 </div>
                 <p>{text}</p>

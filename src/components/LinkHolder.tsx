@@ -13,11 +13,13 @@ interface LinkHolderProps{
     clicks:number
 }
 const LinkHolder =({shortLink,originalUrl,date,id,clicks}:LinkHolderProps)=>{
-    const DELETE_URL = import.meta.env.VITE_DELETE_URL
+    const USER_ID =1
+    const DELETE_URL = `http://localhost:8080/api/v1/shrtn/delete?urlId=${id}&userId=${USER_ID}`
     const[copy,setCopied] =useState<boolean>(false)
+    const[deleted,setDeleted] =useState<boolean>(false)
 
     const deleteById =(async ()=>{
-        const response =await fetch(DELETE_URL+id,{
+        const response =await fetch(DELETE_URL,{
             method:"DELETE"
         })
         if(response.ok){
@@ -45,10 +47,17 @@ const LinkHolder =({shortLink,originalUrl,date,id,clicks}:LinkHolderProps)=>{
                 }}><ContentCopyIcon/></button>
                 <button onClick={()=>{
                     deleteById()
+                    setDeleted(true)
+                    setTimeout(()=>{
+                        setDeleted(false)
+                    },3000)
                 }}><DeleteIcon/></button>
             </div>
             {copy &&
                 <Modal text={"Link Copied link to clipboard!"} icon={<InfoIcon/>} />
+            }
+            {deleted &&
+                <Modal text={"url successfully deleted"} icon={<InfoIcon/>} />
             }
 
         </div>

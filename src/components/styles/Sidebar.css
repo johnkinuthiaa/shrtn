@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 15px;
+    gap: 30px;
     margin-left: 20px;
     margin-top: 50px;
 }
@@ -18,7 +18,8 @@
 
 }
 .aside__container>div>h2{
-    color: rgb(0,0,0,0.1);
+    color: rgb(0,0,0,0.7);
+    font-weight: normal;
 }
 .link__icon__logo{
     color: rgb(255, 101, 0);
@@ -31,13 +32,19 @@
 }
 .sidebar{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-    position: absolute;
+    position: fixed;
     z-index: 999;
+    height: 100vh;
+    padding: 15px;
+    top: 0;
+    display: flex;
+    color: rgb(20,99,255);
+    flex-direction: column;
 }
 .logo{
     margin-top: 20px;
     margin-left: 50px;
-    font-size: larger;
+    font-size: 20px;
 }
 .logo__name{
     display: flex;

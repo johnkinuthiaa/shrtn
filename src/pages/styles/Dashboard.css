@@ -56,12 +56,12 @@ header>*{
     flex-direction: column;
     flex: 0.4;
     position: fixed;
-    width: 650px;
+    width: 500px;
     background-color: whitesmoke;
     right: 0;
     gap: 10px;
-    margin:0 10px;
-    padding: 10px;
+    margin:0;
+    padding: 20px;
 
 }
 .total__clicks{
@@ -92,14 +92,14 @@ header>*{
     object-fit: cover;
 }
 .link__input{
-    padding: 10px;
-    width: 75%;
+    padding: 5px;
+    width: 70%;
     outline: none;
+    border: 1px solid black;
     border-radius: 10px;
-    border: none;
-    box-shadow: 1px 0 1px 1px rgb(0,0,0);
     font-size: medium;
-    font-weight: normal;
+    color: rgb(0,0,0,0.7);
+    font-weight:normal;
 }
 .create__link__button{
     padding: 5px;

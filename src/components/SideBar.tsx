@@ -7,17 +7,10 @@ import QrCode2Icon from '@mui/icons-material/QrCode2';
 import {Link} from "react-router";
 import {useState} from "react";
 const SideBar =()=>{
-    const sidebarStyles ={
-        width:"220px",
-        height:"100vh",
-        position:"fixed",
-        left:"0",
-        top:"0",
-        color: "rgb(20,99,255)"
-    }
+
     const[active,setActive] =useState<boolean>(false)
     return (
-        <aside className={"sidebar"} style={sidebarStyles}>
+        <aside className={"sidebar"} >
             <div className={"logo"}>
                 <h1 className={"logo__name"}><span className={"link__icon__logo"}><LinkIcon /></span>Shrtn</h1>
             </div>
