@@ -26,3 +26,12 @@
     border-radius: 50%;
     height: 100px;
 }
+.edit__window{
+    position: absolute;
+    height: 400px;
+    z-index: 99999999;
+    margin: 100px auto;
+    top:40%;
+    left: 50%;
+    background: #ffffff;
+}
