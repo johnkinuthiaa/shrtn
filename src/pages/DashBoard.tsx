@@ -33,6 +33,10 @@ const DashBoard =()=>{
     const[showModal,setShowModal] =useState(false)
     const myHeaders =new Headers();
     const[error,setError] =useState("")
+    const[modalMessage,setModalMessage] =useState<string>("")
+    const[totalClicks,setTotalClicks] =useState(0)
+
+    const CLICKS_URL =`http://localhost:8080/api/v1/shrtn/total-clicks/${USER_ID}`
 
 
     myHeaders.append("Content-Type","application/json")
@@ -58,8 +62,10 @@ const DashBoard =()=>{
                 const data =await response.json()
                 setShortUrl("http://localhost:8080/api/v1/shrtn/redirect/"+data?.urlModel?.shortUrl)
                 setShowModal(true)
+                setModalMessage("New short url created")
                 setTimeout(()=>{
                     setShowModal(false)
+                    setModalMessage("")
                 },3000)
                 // window.location.reload();
             }else{
@@ -78,10 +84,17 @@ const DashBoard =()=>{
         if(response.ok){
             const data =await response.json()
             setAll(data?.urlModels)
-            setTotalLinks(allUrls?.length)
+            setTotalLinks(data?.urlModels.length)
+            fetchClicks()
+
         }else{
             console.log("error creating a short url")
         }
+    })
+    const fetchClicks=(async ()=>{
+        const response =await fetch(CLICKS_URL)
+        const data =await response.json()
+        setTotalClicks(data?.clicks)
     })
     const {data,isLoading} =useSWR(`http://localhost:8080/api/v1/shrtn/${USER_ID}/all-urls`,getAllUrlsByUser)
     if(isLoading){
@@ -90,47 +103,52 @@ const DashBoard =()=>{
     if(data){
         setAll(data?.urlModels)
     }
+
+
     return(
         <div className={"dashboard__container"}>
             <Header title={""}/>
             <div className={"body__container"}>
                 <div className={"analytics__container"}>
-                    <h2>PERFORMANCE</h2>
+                    <h4>PERFORMANCE</h4>
                     <div className={"total__clicks"}>
                         <div className={"click__container"}>
                             <AssessmentIcon/>
                             <div>
                                 <p>Total clicks</p>
-                                <h3>2,3313</h3>
+                                <h4>{totalClicks}</h4>
                             </div>
                         </div>
                         <div className={"click__container"}>
                             <LinkIcon/>
                             <div>
                                 <p>Total links created</p>
-                                <h3>{totalLinks}</h3>
+                                <h4>{totalLinks}</h4>
                             </div>
                         </div>
                     </div>
                     <div className={"all_links"}>
-                        <h2>ENGAGEMENT ALL TIME</h2>
-                        {allUrls.map(({shortUrl,originalUrl,id,createdOn,clicks},key:number)=>(
-                            <LinkHolder
-                                key={key}
-                                shortLink={shortUrl}
-                                originalUrl={originalUrl}
-                                id={id}
-                                date={createdOn}
-                                clicks={clicks?.clicks}/>
-                        ))}
+                        <h4>ENGAGEMENT ALL TIME</h4>
+                        {allUrls?.length>0?
+                            allUrls?.map(({shortUrl,originalUrl,id,createdOn,clicks},key:number)=>(
+                                <LinkHolder
+                                    key={key}
+                                    shortLink={shortUrl}
+                                    originalUrl={originalUrl}
+                                    id={id}
+                                    date={createdOn}
+                                    clicks={clicks?.clicks}/>
+                            )
+                        ):<div>No content</div>}
+
                     </div>
                 </div>
                 {error &&<Modal text={error} icon={<Error/>}/>}
                 {
-                    showModal&&<Modal text={"New url created successfully!"} icon={<InfoIcon/>}/>
+                    showModal&&<Modal text={modalMessage} icon={<InfoIcon/>}/>
                 }
                 <div className={"create__new"}>
-                    <h1>CREATE NEW LINK <LinkIcon/></h1>
+                    <h4>CREATE NEW LINK <LinkIcon/></h4>
                     <p>Create,short and manage your links</p>
                     <form className={"url__input__form"} onSubmit={(e)=>{
                         e.preventDefault()
@@ -141,7 +159,7 @@ const DashBoard =()=>{
                         <input type={"url"} className={"link__input"} onChange={(e)=>{
                             setLongUrl(e.target.value)
                         }}/>
-                        <button className={"create__link__button"} type={"submit"}>Create Link <ArrowRightAltIcon/></button>
+                        <button className={"create__link__button"} type={"submit"}>Create Link</button>
                     </form>
 
                     <div className={"view__iframe"}>
@@ -149,12 +167,20 @@ const DashBoard =()=>{
 
                         <p>shortened Url:</p>
                         <div className={"show_formed__link"}>
-                            <h3><button onClick={()=>navigator.clipboard.writeText(shortURL)} className={"copy__to__clipboard"} ><LinkIcon/></button> {shortURL}</h3>
+                            <h4><button onClick={()=> {
+                                setShowModal(true)
+                                setModalMessage("Link copied to clipboard")
+                                setTimeout(()=>{
+                                    setShowModal(false)
+                                    setModalMessage("")
+                                },3000)
+                                navigator.clipboard.writeText(shortURL)
+                            }} className={"copy__to__clipboard"} ><LinkIcon/></button> {shortURL}</h4>
                         </div>
                     </div>
                     <div className={"qrcode__gen"}>
                         <div className={"download_qr"}>
-                            <h2>QR CODE</h2>
+                            <h4>QR CODE</h4>
                             <button className={"download__qr__button"}>Download PNG</button>
                         </div>
                         <div className={"actual_qr_image"}>

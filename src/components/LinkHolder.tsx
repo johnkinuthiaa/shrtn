@@ -33,7 +33,7 @@ const LinkHolder =({shortLink,originalUrl,date,id,clicks}:LinkHolderProps)=>{
             <div className={"link__holder__left"}>
                 <a href={`http://localhost:8080/api/v1/shrtn/redirect/${shortLink}`} target={"_blank"} className={"navigation__link"}>{shortLink}</a>
                 <p className={"link__holder__originalUrl"}>{originalUrl}</p>
-                <div><h3 style={{color:"rgb(0,0,0,0.7)",marginTop:"8px"}}>Clicks : <span>{clicks}</span></h3></div>
+                <div><h4 style={{color:"rgb(0,0,0,0.7)",marginTop:"8px"}}>Clicks : <span>{clicks}</span></h4></div>
                 <div><h4 style={{color:"rgb(0,0,0,0.7)"}}>Created on : <span >{date}</span></h4></div>
 
             </div>

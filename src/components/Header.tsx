@@ -10,7 +10,7 @@ const Header =({title}:HeaderProps)=>{
     return(
         <header>
 
-            <h1>{title?title:"Url shortener"}</h1>
+            <h2>{title?title:"Url shortener"}</h2>
             <div className={"header__left"}>
                 <div className={"settings__navigator__icon"} onClick={()=>navigate("/settings")}>
                     <SettingsIcon/>

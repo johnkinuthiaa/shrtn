@@ -23,12 +23,10 @@ header{
     justify-content: space-between;
     align-items: center;
     top: 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
     position: fixed;
     width: 89%;
     margin-left: -30px;
-    /*z-index: 9999;*/
+    z-index: 9999;
     background-color: white;
 }
 header>*{
@@ -92,7 +90,6 @@ header>*{
     object-fit: cover;
 }
 .link__input{
-    padding: 5px;
     width: 70%;
     outline: none;
     border: 1px solid black;
@@ -102,16 +99,15 @@ header>*{
     font-weight:normal;
 }
 .create__link__button{
-    padding: 5px;
+    padding: 8px;
     margin-left: 5px;
     background-color: rgb(20,99,255);
-    font-size: large;
+    font-weight: bold;
+    font-size: medium;
     border: none;
     border-radius: 10px;
     color: white;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 }
 .url__input__form{
     display: flex;
@@ -164,11 +160,16 @@ iframe{
 }
 .show_formed__link{
     margin: 5px;
-    padding: 5px;
+    padding: 2px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     border: 1px solid rgb(0,0,0,0.3);
+}
+.show_formed__link>h4{
+    display: flex;
+    align-items: center;
+    font-weight: normal;
 }
 .copy__to__clipboard{
     cursor: pointer;
@@ -178,4 +179,5 @@ iframe{
     border-radius: 6px;
     align-items: center;
     display: flex;
+    margin-right: 5px;
 }
